@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">The Universe App</string>
+    <string name="api_key">apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM</string>
+
 </resources>

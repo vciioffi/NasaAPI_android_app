@@ -57,5 +57,8 @@ dependencies {
     // Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:2.5.3"
 
+    //viewBinding
+    implementation 'com.android.databinding:viewbinding:7.3.1'
+
 
 }

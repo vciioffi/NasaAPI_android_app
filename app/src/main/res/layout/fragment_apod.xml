@@ -10,7 +10,6 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-
       <TextView
           android:textSize="30sp"
           android:layout_marginTop="10dp"
@@ -35,6 +34,7 @@
 
 
       <ScrollView
+          android:layout_marginTop="10dp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +49,7 @@
                   android:layout_height="wrap_content"
                   android:contentDescription="@string/astronomy_picture_of_the_day"
                   android:minHeight="300dp"
+                  android:scaleType="fitXY"
                   tools:src="@drawable/ic_launcher_background" />
                 <TextView
                     android:layout_marginTop="10dp"

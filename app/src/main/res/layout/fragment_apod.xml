@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ApodFragment">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+
+      <TextView
+          android:textSize="30sp"
+          android:layout_marginTop="10dp"
+          android:id="@+id/textView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/apod"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+          android:layout_marginTop="10dp"
+          android:textSize="20sp"
+          android:id="@+id/textView2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/astronomy_picture_of_the_day"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+      <ScrollView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/textView2">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+              <ImageView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:contentDescription="@string/astronomy_picture_of_the_day"
+                  android:minHeight="300dp"
+                  tools:src="@drawable/ic_launcher_background" />
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    tools:text="Tittle and more"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac dolor dapibus, tincidunt est ut, convallis nulla. Ut vel diam a lectus tempus tincidunt ac et orci. Fusce auctor risus mi, eget accumsan turpis pharetra sed. Integer a enim euismod, posuere lorem scelerisque, pellentesque tortor. Integer ac eros vitae arcu eleifend convallis eu in odio. In eget leo imperdiet erat pharetra pretium sit amet non nulla. Maecenas egestas leo condimentum"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"/>
+          </LinearLayout>
+      </ScrollView>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

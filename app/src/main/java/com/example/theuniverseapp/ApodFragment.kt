@@ -4,7 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.theuniverseapp.apod.presentation.ApodViewModel
+import com.example.theuniverseapp.databinding.FragmentApodBinding
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +29,10 @@ class ApodFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    val viewModel: ApodViewModel by viewModels()
+    private lateinit var binding: FragmentApodBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +45,20 @@ class ApodFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_apod, container, false)
+
+        binding = FragmentApodBinding.inflate(inflater,container,false)
+        viewLifecycleOwner.lifecycleScope.launch() {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    // Update UI elements
+                    viewModel.uiState.value.apply {
+                        binding.tvImageTitleFragmentApod.text = this.apodModel?.title ?: ""
+                    }
+                }
+            }
+        }
+
+        return binding.root
     }
 
     companion object {

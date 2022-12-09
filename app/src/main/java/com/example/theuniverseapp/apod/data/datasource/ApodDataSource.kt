@@ -29,7 +29,7 @@ class ApodDataSource(): ApodDataSourceInterface.Local,ApodDataSourceInterface.Re
     }
     override suspend fun getApodFromApi():Response<ApodDto> {
         val retrofit = getRetrofit().create(ApodService::class.java)
-        val apiKey = Resources.getSystem().getString(R.string.api_key)
+      //  val apiKey = Resources.getSystem().getString(R.string.api_key)
        return retrofit.getPictureOfTheDay("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM")
     }
 

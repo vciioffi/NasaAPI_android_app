@@ -5,7 +5,7 @@ import android.provider.Settings.Secure.getString
 import com.example.theuniverseapp.R
 import com.example.theuniverseapp.apod.data.ApodService
 import com.example.theuniverseapp.apod.data.model.ApodDto
-import com.example.theuniverseapp.apod.utils.getRetrofit
+import com.example.theuniverseapp.common.utils.getRetrofit
 import retrofit2.Response
 
 interface ApodDataSourceInterface{

@@ -1,4 +1,4 @@
-package com.example.theuniverseapp.apod.utils
+package com.example.theuniverseapp.common.utils
 
 import com.example.theuniverseapp.apod.data.model.ApodDto
 import com.example.theuniverseapp.apod.domain.model.ApodModel

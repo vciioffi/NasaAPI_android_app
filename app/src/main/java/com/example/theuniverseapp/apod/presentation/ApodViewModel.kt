@@ -4,18 +4,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.theuniverseapp.apod.domain.model.ApodModel
 import com.example.theuniverseapp.apod.domain.usecases.GetApodUc
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class ApodModelUiState(
     val apodModel: ApodModel? = null
 )
 
 //TODO: Inject usecase
-class ApodViewModel : ViewModel() {
+@HiltViewModel
+class ApodViewModel @Inject constructor(
+
+    private val getApodUc: GetApodUc
+
+) : ViewModel() {
 
     val usecase = GetApodUc()
 

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import coil.load
 import com.example.theuniverseapp.apod.presentation.ApodViewModel
 import com.example.theuniverseapp.databinding.FragmentApodBinding
 import kotlinx.coroutines.launch
@@ -53,6 +54,8 @@ class ApodFragment : Fragment() {
                     // Update UI elements
                     viewModel.uiState.value.apply {
                         binding.tvImageTitleFragmentApod.text = this.apodModel?.title ?: ""
+                        binding.ivFragmentApod.load(this.apodModel?.url)
+                        binding.tvImageDescFragmentApod.text = this.apodModel?.explanation ?: ""
                     }
                 }
             }

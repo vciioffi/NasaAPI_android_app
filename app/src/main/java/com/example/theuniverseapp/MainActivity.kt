@@ -2,8 +2,14 @@ package com.example.theuniverseapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
+import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.example.theuniverseapp.apod.data.ApodService
+import com.example.theuniverseapp.apod.presentation.ApodViewModel
 import com.example.theuniverseapp.apod.utils.getRetrofit
 import com.example.theuniverseapp.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -16,9 +22,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        supportActionBar?.hide()
         setContentView(binding.root)
-
-        val bottomNavigationView = binding.bottomNavigationView
+        //val bottomNavigationView = binding.bottomNavigationView
       //  val navContoller = findNavController(binding.fragmentContainerView.id)
 
         val retrofit = getRetrofit().create(ApodService::class.java)

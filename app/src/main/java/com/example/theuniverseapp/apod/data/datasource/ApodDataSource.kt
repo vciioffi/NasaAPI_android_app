@@ -45,7 +45,6 @@ class ApodDataSource @Inject constructor(
         val current = formatter.format(time)
         return apodDAO.loadApodId(date = current).toApodModel()
     }
-
     override suspend fun getApodFromApi(): Response<ApodDto> {
 
         val retrofit = getRetrofit().create(ApodService::class.java)

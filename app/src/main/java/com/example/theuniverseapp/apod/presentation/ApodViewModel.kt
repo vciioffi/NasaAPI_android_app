@@ -24,8 +24,6 @@ class ApodViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    val usecase = GetApodUc()
-
     private val _uiState = MutableStateFlow(ApodModelUiState())
     val uiState: StateFlow<ApodModelUiState> = _uiState.asStateFlow()
 
@@ -37,7 +35,7 @@ class ApodViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    apodModel = usecase.invoke()
+                    apodModel = getApodUc.invoke()
                 )
             }
         }

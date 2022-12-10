@@ -10,12 +10,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.example.theuniverseapp.apod.data.ApodService
 import com.example.theuniverseapp.apod.presentation.ApodViewModel
-import com.example.theuniverseapp.apod.utils.getRetrofit
+import com.example.theuniverseapp.common.utils.getRetrofit
 import com.example.theuniverseapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 

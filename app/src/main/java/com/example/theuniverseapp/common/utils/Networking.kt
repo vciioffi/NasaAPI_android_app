@@ -1,4 +1,4 @@
-package com.example.theuniverseapp.apod.utils
+package com.example.theuniverseapp.common.utils
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

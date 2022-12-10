@@ -9,10 +9,10 @@ import javax.inject.Inject
 
 
 class GetApodUc @Inject constructor(
+    val repository: ApodRepository
 
 ) {
 
-    val repository: ApodRepository = ApodRepository()
 
    suspend fun invoke(): ApodModel {
        return repository.getApodResult().toApodModel()

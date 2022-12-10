@@ -4,9 +4,12 @@ import android.content.res.Resources
 import android.provider.Settings.Secure.getString
 import com.example.theuniverseapp.R
 import com.example.theuniverseapp.apod.data.ApodService
+import com.example.theuniverseapp.apod.data.db.ApodDAO
 import com.example.theuniverseapp.apod.data.model.ApodDto
+import com.example.theuniverseapp.common.db.AppDatabase
 import com.example.theuniverseapp.common.utils.getRetrofit
 import retrofit2.Response
+import javax.inject.Inject
 
 interface ApodDataSourceInterface{
 
@@ -22,8 +25,10 @@ interface ApodDataSourceInterface{
     }
 }
 
-//TODO: Inject retrofit and db and string resource apikey
-class ApodDataSource(): ApodDataSourceInterface.Local,ApodDataSourceInterface.Remote{
+//TODO: Inject retrofit  and string resource apikey
+class ApodDataSource @Inject constructor (
+    private val apodDAO: ApodDAO
+        ): ApodDataSourceInterface.Local,ApodDataSourceInterface.Remote{
     override suspend fun getApodFromDatabase() {
         TODO("Not yet implemented")
     }

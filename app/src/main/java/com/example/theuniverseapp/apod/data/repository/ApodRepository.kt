@@ -3,11 +3,14 @@ package com.example.theuniverseapp.apod.data.repository
 import com.example.theuniverseapp.apod.data.datasource.ApodDataSource
 import com.example.theuniverseapp.apod.data.datasource.ApodDataSourceInterface
 import com.example.theuniverseapp.apod.data.model.ApodDto
+import javax.inject.Inject
 
 //TODO: Inject datasource
-class ApodRepository() {
+class ApodRepository @Inject constructor(
+    private val apodDataSource : ApodDataSource
 
-    private val apodDataSource = ApodDataSource()
+) {
+
 
     suspend fun getApodResult(): ApodDto {
         //TODO: update methos so it gets info from db

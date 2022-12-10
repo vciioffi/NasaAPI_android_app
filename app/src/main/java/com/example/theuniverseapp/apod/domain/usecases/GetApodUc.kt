@@ -15,6 +15,6 @@ class GetApodUc @Inject constructor(
 
 
    suspend fun invoke(): ApodModel {
-       return repository.getApodResult().toApodModel()
+       return repository.getApodResult()
     }
 }

@@ -33,42 +33,13 @@
           app:layout_constraintTop_toBottomOf="@+id/tvTitle_fragment_apod" />
 
 
-      <ScrollView
-          android:layout_marginTop="10dp"
+      <androidx.viewpager2.widget.ViewPager2
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/tvSubTitle_fragment_apod">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-              <ImageView
-                  android:id="@+id/iv_fragment_apod"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:contentDescription="@string/astronomy_picture_of_the_day"
-                  android:minHeight="300dp"
-                  android:scaleType="fitXY"
-                  tools:src="@drawable/ic_launcher_background" />
-                <TextView
-                    android:id="@+id/tvImageTitle_fragment_apod"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    tools:text="Tittle and more"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tvImageDesc_fragment_apod"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="210dp"
-                    android:layout_width="match_parent"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac dolor dapibus, tincidunt est ut, convallis nulla. Ut vel diam a lectus tempus tincidunt ac et orci. Fusce auctor risus mi, eget accumsan turpis pharetra sed. Integer a enim euismod, posuere lorem scelerisque, pellentesque tortor. Integer ac eros vitae arcu eleifend convallis eu in odio. In eget leo imperdiet erat pharetra pretium sit amet non nulla. Maecenas egestas leo condimentum"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"/>
-          </LinearLayout>
-      </ScrollView>
+
+      </androidx.viewpager2.widget.ViewPager2>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

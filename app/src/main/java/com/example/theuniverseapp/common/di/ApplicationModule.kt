@@ -18,6 +18,7 @@ class ApplicationModule {
             appContext,
             AppDatabase::class.java,
             "TheUniverseAppDatabase"
-        ).build()
+        )
+            .build()
     }
 }

@@ -40,11 +40,16 @@ class ApodDataSource @Inject constructor(
 
     @SuppressLint("SimpleDateFormat")
     override suspend fun getApodFromDatabase(): ApodModel {
+
         val time = Calendar.getInstance().time
         val formatter = SimpleDateFormat("yyyy-MM-dd")
         val current = formatter.format(time)
-        return apodDAO.loadApodId(date = current).toApodModel()
+        return if (apodDAO.isRowIsExist(date = current))
+            apodDAO.loadApodId(date = current).toApodModel()
+        else
+            ApodModel("", "", "", "", "No existe en db", "")
     }
+
     override suspend fun getApodFromApi(): Response<ApodDto> {
 
         val retrofit = getRetrofit().create(ApodService::class.java)

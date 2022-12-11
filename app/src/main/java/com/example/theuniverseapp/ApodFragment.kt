@@ -55,9 +55,9 @@ class ApodFragment : Fragment() {
                 viewModel.uiState.collect {
                     // Update UI elements
                     viewModel.uiState.value.apply {
-                        binding.tvImageTitleFragmentApod.text = this.apodModel?.title ?: ""
-                        binding.ivFragmentApod.load(this.apodModel?.url)
-                        binding.tvImageDescFragmentApod.text = this.apodModel?.explanation ?: ""
+                        //binding.tvImageTitleFragmentApod.text = this.apodModel?.title ?: ""
+                        //binding.ivFragmentApod.load(this.apodModel?.url)
+                        //binding.tvImageDescFragmentApod.text = this.apodModel?.explanation ?: ""
                     }
                 }
             }

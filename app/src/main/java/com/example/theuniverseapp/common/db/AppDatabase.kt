@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.example.theuniverseapp.apod.data.db.ApodDAO
 import com.example.theuniverseapp.apod.data.db.ApodDb
 
-@Database(entities = [ApodDb::class], version = 1)
+@Database(entities = [ApodDb::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun apodDao(): ApodDAO
 }

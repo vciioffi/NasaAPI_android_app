@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.example.theuniverseapp.apod.presentation.ApodViewModel
+import com.example.theuniverseapp.apod.presentation.view.ApodPaggerAdapter
 import com.example.theuniverseapp.databinding.FragmentApodBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -58,6 +60,9 @@ class ApodFragment : Fragment() {
                         //binding.tvImageTitleFragmentApod.text = this.apodModel?.title ?: ""
                         //binding.ivFragmentApod.load(this.apodModel?.url)
                         //binding.tvImageDescFragmentApod.text = this.apodModel?.explanation ?: ""
+                        val adapter = this.listApodModel?.let { it1 -> ApodPaggerAdapter(it1) }
+                        binding.viewPagerApod.adapter = adapter
+                       // binding.viewPagerApod.orientation = ViewPager2.ORIENTATION_VERTICAL
                     }
                 }
             }

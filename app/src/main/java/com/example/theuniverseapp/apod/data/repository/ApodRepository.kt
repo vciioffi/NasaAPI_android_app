@@ -8,12 +8,10 @@ import com.example.theuniverseapp.common.utils.toApodDb
 import com.example.theuniverseapp.common.utils.toApodModel
 import javax.inject.Inject
 
-//TODO: Inject datasource
 class ApodRepository @Inject constructor(
-    private val apodDataSource : ApodDataSource
+    private val apodDataSource: ApodDataSource
 
 ) {
-
 
     suspend fun getApodResult(): ApodModel {
         val response = apodDataSource.getApodFromApi()
@@ -22,9 +20,14 @@ class ApodRepository @Inject constructor(
             apodDto.toApodDb()
             apodDataSource.insertApodToDatabase(apodDto.toApodDb())
             return apodDto.toApodModel()
-        }
-        else
+        } else
             return apodDataSource.getApodFromDatabase()
+    }
+    //TODO: Implement safety call
+    suspend fun getApodListResult():List<ApodModel>{
+        return apodDataSource.getApodListFromApi().body()?.map {
+            it.toApodModel()
+        } ?: emptyList()
     }
 
 }

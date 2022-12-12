@@ -23,4 +23,8 @@ interface ApodDAO {
     @Delete
     suspend fun delete(apodDb: ApodDb)
 
+    @Query("SELECT EXISTS(SELECT * FROM apod WHERE date = (:date))")
+    suspend fun isRowIsExist(date : String) : Boolean
+
+
 }

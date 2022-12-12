@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 data class ApodDb(
     @PrimaryKey val date: String,
     val copyright: String?,
-    val explanation: String,
-    val hdurl: String,
-    val title: String,
-    val url: String
+    val explanation: String?,
+    val hdurl: String?,
+    val title: String?,
+    val url: String?
 )

@@ -69,7 +69,7 @@ class ApodDataSource @Inject constructor(
         val formatter = SimpleDateFormat("yyyy-MM-dd")
         val current = formatter.format(time)
 
-        val period = Period.of(0, 0, 20)
+        val period = Period.of(0, 0, 10)
         val date = LocalDate.parse(current)
         val modifiedDate = date.minus(period)
 

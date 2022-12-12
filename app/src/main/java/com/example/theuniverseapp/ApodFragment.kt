@@ -49,20 +49,23 @@ class ApodFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         binding = FragmentApodBinding.inflate(inflater,container,false)
         viewLifecycleOwner.lifecycleScope.launch() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-                    // Update UI elements
                     viewModel.uiState.value.apply {
                         //binding.tvImageTitleFragmentApod.text = this.apodModel?.title ?: ""
                         //binding.ivFragmentApod.load(this.apodModel?.url)
                         //binding.tvImageDescFragmentApod.text = this.apodModel?.explanation ?: ""
                         val adapter = this.listApodModel?.let { it1 -> ApodPaggerAdapter(it1) }
-                        binding.viewPagerApod.adapter = adapter
-                       // binding.viewPagerApod.orientation = ViewPager2.ORIENTATION_VERTICAL
+
+                        binding.viewPagerApod.apply {
+                            this.adapter = adapter
+                            this.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                           // this.adapter?.let { it1 -> this.setCurrentItem(it1.itemCount,true) }
+                        }
+
                     }
                 }
             }

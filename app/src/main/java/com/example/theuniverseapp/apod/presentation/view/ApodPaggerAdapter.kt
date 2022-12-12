@@ -11,9 +11,12 @@ import com.example.theuniverseapp.R
 import com.example.theuniverseapp.apod.domain.model.ApodModel
 
 class ApodPaggerAdapter(
-    val apods: List<ApodModel>
+    var apods: List<ApodModel>
 ) : RecyclerView.Adapter<ApodPaggerAdapter.ApodViewHolder>() {
 
+    init {
+        apods = apods.reversed()
+    }
     inner class ApodViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         val title: TextView = itemView.findViewById(R.id.tvImageTitle_fragment_apod)

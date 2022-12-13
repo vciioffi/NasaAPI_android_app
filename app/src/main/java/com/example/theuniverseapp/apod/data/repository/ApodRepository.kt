@@ -15,6 +15,7 @@ class ApodRepository @Inject constructor(
 
     suspend fun getApodResult(): ApodModel {
         val response = apodDataSource.getApodFromApi()
+
         if (response.isSuccessful) {
             val apodDto: ApodDto = response.body()!!
             apodDto.toApodDb()

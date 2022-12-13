@@ -22,9 +22,12 @@ class ApodPaggerAdapter(
         val title: TextView = itemView.findViewById(R.id.tvImageTitle_fragment_apod)
         val image: ImageView = itemView.findViewById(R.id.iv_fragment_apod_pagger)
         val desc : TextView = itemView.findViewById(R.id.tvImageDesc_fragment_apod)
+        val date: TextView = itemView.findViewById(R.id.tv_date_item_apod)
+
         fun bind (apod: ApodModel){
             title.text  =apod.title
             image.load(apod.url)
+            date.text = apod.date
             desc.text = apod.explanation
         }
     }

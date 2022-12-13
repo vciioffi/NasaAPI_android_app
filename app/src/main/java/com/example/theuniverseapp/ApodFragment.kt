@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -55,23 +56,34 @@ class ApodFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     viewModel.uiState.value.apply {
-                        //binding.tvImageTitleFragmentApod.text = this.apodModel?.title ?: ""
-                        //binding.ivFragmentApod.load(this.apodModel?.url)
-                        //binding.tvImageDescFragmentApod.text = this.apodModel?.explanation ?: ""
                         val adapter = this.listApodModel?.let { it1 -> ApodPaggerAdapter(it1) }
 
                         binding.viewPagerApod.apply {
                             this.adapter = adapter
                             this.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-                           // this.adapter?.let { it1 -> this.setCurrentItem(it1.itemCount,true) }
                         }
-
+                        binding.viewPagerApod.adapter?.let { it1 ->
+                            listenOverScroll(binding.viewPagerApod.currentItem,
+                                it1.itemCount)
+                        }
                     }
                 }
             }
         }
 
         return binding.root
+    }
+    private fun listenOverScroll(currentIndex:Int, size:Int){
+        var index = currentIndex
+        binding.viewPagerApod.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                index = position
+                println("la ps $index")
+                if (index>=size-3)
+                    println("la rosalia")
+            }
+        })
     }
 
 

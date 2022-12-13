@@ -18,7 +18,6 @@ data class ApodModelUiState(
     val listApodModel: List<ApodModel>? = null
 )
 
-//TODO: Inject usecase
 @HiltViewModel
 class ApodViewModel @Inject constructor(
 

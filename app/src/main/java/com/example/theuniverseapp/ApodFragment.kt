@@ -44,13 +44,6 @@ class ApodFragment : Fragment() {
     private lateinit var binding: FragmentApodBinding
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +52,9 @@ class ApodFragment : Fragment() {
         binding = FragmentApodBinding.inflate(inflater, container, false)
         binding.btCalendar.setOnClickListener {
             showDatePickerDialog()
+        }
+        binding.btList.setOnClickListener {
+            setAdapter()
         }
         val adapter = ApodPaggerAdapter(arrayListOf())
         binding.viewPagerApod.apply {
@@ -99,6 +95,11 @@ class ApodFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun setAdapter() {
+
+        viewModel.updateApodList()
     }
 
     private fun listenOverScroll(currentIndex: Int, size: Int) {

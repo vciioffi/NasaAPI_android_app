@@ -41,6 +41,7 @@
                 android:src="@drawable/ic_calendar"
                 android:contentDescription="calendar button" />
             <ImageButton
+                android:id="@+id/bt_list"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_format_line_spacing"

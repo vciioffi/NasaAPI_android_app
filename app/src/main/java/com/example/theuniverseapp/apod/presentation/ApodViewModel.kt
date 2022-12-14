@@ -64,7 +64,7 @@ class ApodViewModel @Inject constructor(
          }
     }
 
-    private fun updateApodList() {
+     fun updateApodList() {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(

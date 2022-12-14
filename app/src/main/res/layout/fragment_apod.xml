@@ -21,6 +21,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/tvSubTitle_fragment_apod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

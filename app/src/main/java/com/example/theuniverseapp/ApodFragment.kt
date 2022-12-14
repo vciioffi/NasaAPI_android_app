@@ -1,10 +1,12 @@
 package com.example.theuniverseapp
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,11 +14,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import coil.load
+import com.example.theuniverseapp.apod.domain.model.ApodModel
+import com.example.theuniverseapp.apod.domain.usecases.GetApodWithDateUc
 import com.example.theuniverseapp.apod.presentation.ApodViewModel
 import com.example.theuniverseapp.apod.presentation.view.ApodPaggerAdapter
+import com.example.theuniverseapp.apod.presentation.view.DatePickerFragment
 import com.example.theuniverseapp.databinding.FragmentApodBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import okhttp3.Interceptor.Companion.invoke
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,41 +44,95 @@ class ApodFragment : Fragment() {
     private lateinit var binding: FragmentApodBinding
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentApodBinding.inflate(inflater,container,false)
+        binding = FragmentApodBinding.inflate(inflater, container, false)
+        binding.btCalendar.setOnClickListener {
+            showDatePickerDialog()
+        }
+        binding.btList.setOnClickListener {
+            setAdapter()
+        }
+        val adapter = ApodPaggerAdapter(arrayListOf())
+        binding.viewPagerApod.apply {
+            this.adapter = adapter
+            this.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            this.offscreenPageLimit = 10000
+
+            /*  when(binding.viewPagerApod.currentItem >= binding.viewPagerApod.adapter?.itemCount!!-3){
+                  true ->viewModel.updateApodListPagination()
+
+                  else -> {}
+              }*/
+        }
         viewLifecycleOwner.lifecycleScope.launch() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     viewModel.uiState.value.apply {
-                        //binding.tvImageTitleFragmentApod.text = this.apodModel?.title ?: ""
-                        //binding.ivFragmentApod.load(this.apodModel?.url)
-                        //binding.tvImageDescFragmentApod.text = this.apodModel?.explanation ?: ""
-                        val adapter = this.listApodModel?.let { it1 -> ApodPaggerAdapter(it1) }
+                        println("sss"+this.listApodModel)
+                        adapter.clearList()
+                        this.listApodModel?.let { it1 -> adapter.apods.addAll(it1) }
 
-                        binding.viewPagerApod.apply {
-                            this.adapter = adapter
-                            this.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-                           // this.adapter?.let { it1 -> this.setCurrentItem(it1.itemCount,true) }
-                        }
+                        adapter.reverseList()
+                        adapter.notifyDataSetChanged()
 
+
+
+
+                        /* binding.viewPagerApod.adapter?.let { it1 ->
+                             listenOverScroll(
+                                 binding.viewPagerApod.currentItem,
+                                 it1.itemCount
+                             )
+                         }*/
                     }
                 }
             }
         }
 
+
         return binding.root
     }
 
+    private fun setAdapter() {
+
+        viewModel.updateApodList()
+    }
+
+    private fun listenOverScroll(currentIndex: Int, size: Int) {
+        var index = currentIndex
+        binding.viewPagerApod.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                index = position
+                println("la pagina actual $index")
+                println("tamano de la lista $size")
+                if (index >= size - 3) {
+                    println(viewModel.uiState.value.listApodModel)
+                    viewModel.updateApodListPagination()
+                    println(viewModel.uiState.value.listApodModel)
+                }
+            }
+        })
+    }
+
+    private fun showDatePickerDialog() {
+        val newFragment =
+            DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                // +1 because January is zero
+                val selectedDate = year.toString() + "-" + (month + 1) + "-" +  day.toString()
+                viewLifecycleOwner.lifecycleScope.launch {
+                 //   var mutbleList: MutableList<ApodModel> = arrayListOf()
+                    viewModel.updateApodWithDate(selectedDate)
+                 //   viewModel.uiState.value.apodModel?.let { mutbleList.add(it) }
+                   // binding.viewPagerApod.adapter = ApodPaggerAdapter(mutbleList)
+                }
+            })
+        activity?.let { newFragment.show(it.supportFragmentManager, "datePicker") }
+    }
 
 }

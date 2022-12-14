@@ -15,6 +15,7 @@ class ApodRepository @Inject constructor(
 
     suspend fun getApodResult(): ApodModel {
         val response = apodDataSource.getApodFromApi()
+
         if (response.isSuccessful) {
             val apodDto: ApodDto = response.body()!!
             apodDto.toApodDb()
@@ -28,6 +29,15 @@ class ApodRepository @Inject constructor(
         return apodDataSource.getApodListFromApi().body()?.map {
             it.toApodModel()
         } ?: emptyList()
+    }
+
+    suspend fun getApodListResultWithDates(start: Int,end:Int):List<ApodModel>{
+        return apodDataSource.getApodLisFromApiWithDates(start,end).body()?.map {
+            it.toApodModel()
+        }?: emptyList()
+    }
+    suspend fun getApodWithDate(date:String): ApodModel{
+        return apodDataSource.getApodFromApiWithDate(date).body()?.toApodModel() ?: ApodModel("","","","","NO apod this day","")
     }
 
 }

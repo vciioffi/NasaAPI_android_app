@@ -4,6 +4,6 @@
         android:id="@+id/apodFragment"
         android:icon="@drawable/ic_android"
         android:title="@string/apod"/>
-    <item android:title="Apod"/>
-    <item android:title="Apod"/>
+    <item android:title="TODO"/>
+    <item android:title="TODO"/>
 </menu>

@@ -31,4 +31,10 @@ class ApodRepository @Inject constructor(
         } ?: emptyList()
     }
 
+    suspend fun getApodListResultWithDates(start: Int,end:Int):List<ApodModel>{
+        return apodDataSource.getApodLisFromApiWithDates(start,end).body()?.map {
+            it.toApodModel()
+        }?: emptyList()
+    }
+
 }

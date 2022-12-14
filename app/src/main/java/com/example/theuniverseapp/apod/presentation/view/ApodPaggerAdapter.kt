@@ -11,21 +11,23 @@ import com.example.theuniverseapp.R
 import com.example.theuniverseapp.apod.domain.model.ApodModel
 
 class ApodPaggerAdapter(
-    var apods: List<ApodModel>
+    var apods: MutableList<ApodModel>
 ) : RecyclerView.Adapter<ApodPaggerAdapter.ApodViewHolder>() {
 
-    init {
-        apods = apods.reversed()
+    fun reverseList() {
+        apods = apods.asReversed()
+        notifyDataSetChanged()
     }
-    inner class ApodViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+
+    inner class ApodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val title: TextView = itemView.findViewById(R.id.tvImageTitle_fragment_apod)
         val image: ImageView = itemView.findViewById(R.id.iv_fragment_apod_pagger)
-        val desc : TextView = itemView.findViewById(R.id.tvImageDesc_fragment_apod)
+        val desc: TextView = itemView.findViewById(R.id.tvImageDesc_fragment_apod)
         val date: TextView = itemView.findViewById(R.id.tv_date_item_apod)
 
-        fun bind (apod: ApodModel){
-            title.text  =apod.title
+        fun bind(apod: ApodModel) {
+            title.text = apod.title
             image.load(apod.url)
             date.text = apod.date
             desc.text = apod.explanation
@@ -33,13 +35,15 @@ class ApodPaggerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApodViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_pagger_apod,parent,false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_pagger_apod, parent, false)
         return ApodViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ApodViewHolder, position: Int) {
         val curApod = apods[position]
         holder.bind(curApod)
+
     }
 
     override fun getItemCount(): Int = apods.size

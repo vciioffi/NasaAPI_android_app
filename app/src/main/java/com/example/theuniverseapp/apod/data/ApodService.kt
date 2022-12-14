@@ -15,4 +15,7 @@ interface ApodService {
 
     @GET
     suspend fun getPictureOfTheDayList(@Url url: String):Response<List<ApodDto>>
+
+    @GET
+    suspend fun getPictureOfTheDayListWithDates(@Url url: String):Response<List<ApodDto>>
 }

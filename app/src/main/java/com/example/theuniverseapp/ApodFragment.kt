@@ -51,37 +51,56 @@ class ApodFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentApodBinding.inflate(inflater,container,false)
+        binding = FragmentApodBinding.inflate(inflater, container, false)
+        val adapter = ApodPaggerAdapter(arrayListOf())
         viewLifecycleOwner.lifecycleScope.launch() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     viewModel.uiState.value.apply {
-                        val adapter = this.listApodModel?.let { it1 -> ApodPaggerAdapter(it1) }
+                        this.listApodModel?.let { it1 -> adapter.apods.addAll(it1) }
+                        adapter.reverseList()
 
                         binding.viewPagerApod.apply {
                             this.adapter = adapter
                             this.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                            this.offscreenPageLimit = 10000
+                          /*  when(binding.viewPagerApod.currentItem >= binding.viewPagerApod.adapter?.itemCount!!-3){
+                                true ->viewModel.updateApodListPagination()
+
+                                else -> {}
+                            }*/
                         }
-                        binding.viewPagerApod.adapter?.let { it1 ->
-                            listenOverScroll(binding.viewPagerApod.currentItem,
-                                it1.itemCount)
-                        }
+
+
+                       /* binding.viewPagerApod.adapter?.let { it1 ->
+                            listenOverScroll(
+                                binding.viewPagerApod.currentItem,
+                                it1.itemCount
+                            )
+                        }*/
                     }
                 }
             }
         }
 
+
         return binding.root
     }
-    private fun listenOverScroll(currentIndex:Int, size:Int){
+
+    private fun listenOverScroll(currentIndex: Int, size: Int) {
         var index = currentIndex
-        binding.viewPagerApod.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+        binding.viewPagerApod.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 index = position
-                println("la ps $index")
-                if (index>=size-3)
-                    println("la rosalia")
+                println("la pagina actual $index")
+                println("tamano de la lista $size")
+                if (index >= size - 3) {
+                    println(viewModel.uiState.value.listApodModel)
+                    viewModel.updateApodListPagination()
+                    println(viewModel.uiState.value.listApodModel)
+                }
             }
         })
     }

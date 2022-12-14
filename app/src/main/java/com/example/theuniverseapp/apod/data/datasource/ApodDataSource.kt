@@ -1,21 +1,14 @@
 package com.example.theuniverseapp.apod.data.datasource
 
 import android.annotation.SuppressLint
-import android.content.res.Resources
-import android.os.Build
-import android.provider.Settings.Secure.getString
-import androidx.annotation.RequiresApi
-import com.example.theuniverseapp.R
 import com.example.theuniverseapp.apod.data.ApodService
 import com.example.theuniverseapp.apod.data.db.ApodDAO
 import com.example.theuniverseapp.apod.data.db.ApodDb
 import com.example.theuniverseapp.apod.data.model.ApodDto
 import com.example.theuniverseapp.apod.domain.model.ApodModel
-import com.example.theuniverseapp.common.db.AppDatabase
 import com.example.theuniverseapp.common.utils.getRetrofit
 import com.example.theuniverseapp.common.utils.toApodModel
 import retrofit2.Response
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
 import java.util.*
@@ -37,7 +30,7 @@ interface ApodDataSourceInterface {
 
         suspend fun getApodListFromApi(): Response<List<ApodDto>>
 
-        suspend fun getApodLisFromApiWithDates(dateStart:String, dateEnd: String): Response<List<ApodDto>>
+        suspend fun getApodLisFromApiWithDates(dateStart:Int, dateEnd: Int): Response<List<ApodDto>>
     }
 }
 
@@ -64,27 +57,35 @@ class ApodDataSource @Inject constructor(
 
     }
 
-    @SuppressLint("SimpleDateFormat")
     override suspend fun getApodListFromApi(): Response<List<ApodDto>> {
 
-        val time = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
-        val current = formatter.format(time)
+        val current = LocalDate.now().toString()
 
         val period = Period.of(0, 0, 10)
         val date = LocalDate.parse(current)
         val modifiedDate = date.minus(period)
 
         val retrofit = getRetrofit().create(ApodService::class.java)
-        val response = retrofit.getPictureOfTheDayList("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM&start_date=$modifiedDate")
-        return response
+        return retrofit.getPictureOfTheDayList("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM&start_date=$modifiedDate")
     }
 
     override suspend fun getApodLisFromApiWithDates(
-        dateStart: String,
-        dateEnd: String
+        dateStart: Int,
+        dateEnd: Int
     ): Response<List<ApodDto>> {
-        TODO("Not yet implemented")
+        val current = LocalDate.now().toString()
+
+        val period = Period.of(0, 0, dateEnd-1)
+        val date = LocalDate.parse(current)
+        val modifiedDateEnd = date.minus(period)
+
+        val periodStart = Period.of(0, 0, dateStart)
+        val dateStart = LocalDate.parse(current)
+        val modifiedDateStart = dateStart.minus(periodStart)
+
+        val retrofit = getRetrofit().create(ApodService::class.java)
+        return retrofit.getPictureOfTheDayList("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM&start_date=$modifiedDateStart&end_date=$modifiedDateEnd")
+
     }
 
     override suspend fun insertApodToDatabase(apodDb: ApodDb) {

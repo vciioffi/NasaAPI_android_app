@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.theuniverseapp.apod.domain.model.ApodModel
 import com.example.theuniverseapp.apod.domain.usecases.GetApodListUc
+import com.example.theuniverseapp.apod.domain.usecases.GetApodListWithDatesUc
 import com.example.theuniverseapp.apod.domain.usecases.GetApodUc
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,20 +16,23 @@ import javax.inject.Inject
 
 data class ApodModelUiState(
     val apodModel: ApodModel? = null,
-    val listApodModel: List<ApodModel>? = null
+    var listApodModel: MutableList<ApodModel>? = null,
+
 )
 
 @HiltViewModel
 class ApodViewModel @Inject constructor(
 
     private val getApodUc: GetApodUc,
-    private val getApodListUc: GetApodListUc
+    private val getApodListUc: GetApodListUc,
+    private val getApodListWithDatesUc: GetApodListWithDatesUc
 
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ApodModelUiState())
     val uiState: StateFlow<ApodModelUiState> = _uiState.asStateFlow()
-
+    private var dateStart: Int = 30
+    private var datEnd:Int  =15
     init {
         updateApod()
         updateApodList()
@@ -47,7 +51,16 @@ class ApodViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    listApodModel = getApodListUc.invoke()
+                    listApodModel = getApodListUc.invoke().toMutableList()
+                )
+            }
+        }
+    }
+    fun updateApodListPagination(){
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    listApodModel = getApodListWithDatesUc.invoke(dateStart, datEnd).toMutableList()
                 )
             }
         }

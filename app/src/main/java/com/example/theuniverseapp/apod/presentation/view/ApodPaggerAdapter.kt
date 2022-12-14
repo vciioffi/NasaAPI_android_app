@@ -18,6 +18,9 @@ class ApodPaggerAdapter(
         apods = apods.asReversed()
         notifyDataSetChanged()
     }
+    fun clearList(){
+         apods.clear()
+    }
 
     inner class ApodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

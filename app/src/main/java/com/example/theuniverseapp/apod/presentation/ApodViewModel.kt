@@ -35,8 +35,8 @@ class ApodViewModel @Inject constructor(
     val uiState: StateFlow<ApodModelUiState> = _uiState.asStateFlow()
     private var dateStart: Int = 30
     private var datEnd:Int  =15
+
     init {
-        updateApod()
         updateApodList()
     }
 
@@ -50,9 +50,18 @@ class ApodViewModel @Inject constructor(
         }
     }
      fun updateApodWithDate(date: String) {
-        viewModelScope.launch {
-            _uiState.value.apodModel = getApodtWithDateUc.invoke(date)
-        }
+        var newList = _uiState.value.listApodModel
+         println("aaa"+ (newList?.size ?: 0))
+         viewModelScope.launch {
+             newList?.add(getApodtWithDateUc.invoke(date))
+
+             _uiState.update {
+                it.copy(
+                    listApodModel = listOf<ApodModel>(getApodtWithDateUc.invoke(date)).toMutableList()
+                )
+             }
+             println("www"+ (_uiState.value.listApodModel?.size ?: 0))
+         }
     }
 
     private fun updateApodList() {

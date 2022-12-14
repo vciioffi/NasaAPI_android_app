@@ -61,23 +61,29 @@ class ApodFragment : Fragment() {
             showDatePickerDialog()
         }
         val adapter = ApodPaggerAdapter(arrayListOf())
+        binding.viewPagerApod.apply {
+            this.adapter = adapter
+            this.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            this.offscreenPageLimit = 10000
+
+            /*  when(binding.viewPagerApod.currentItem >= binding.viewPagerApod.adapter?.itemCount!!-3){
+                  true ->viewModel.updateApodListPagination()
+
+                  else -> {}
+              }*/
+        }
         viewLifecycleOwner.lifecycleScope.launch() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     viewModel.uiState.value.apply {
+                        println("sss"+this.listApodModel)
+                        adapter.clearList()
                         this.listApodModel?.let { it1 -> adapter.apods.addAll(it1) }
+
                         adapter.reverseList()
+                        adapter.notifyDataSetChanged()
 
-                        binding.viewPagerApod.apply {
-                            this.adapter = adapter
-                            this.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-                            this.offscreenPageLimit = 10000
-                            /*  when(binding.viewPagerApod.currentItem >= binding.viewPagerApod.adapter?.itemCount!!-3){
-                                  true ->viewModel.updateApodListPagination()
 
-                                  else -> {}
-                              }*/
-                        }
 
 
                         /* binding.viewPagerApod.adapter?.let { it1 ->
@@ -118,12 +124,11 @@ class ApodFragment : Fragment() {
             DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
                 // +1 because January is zero
                 val selectedDate = year.toString() + "-" + (month + 1) + "-" +  day.toString()
-                println(selectedDate)
-                lifecycleScope.launch {
-                    var mutbleList: MutableList<ApodModel> = arrayListOf()
+                viewLifecycleOwner.lifecycleScope.launch {
+                 //   var mutbleList: MutableList<ApodModel> = arrayListOf()
                     viewModel.updateApodWithDate(selectedDate)
-                    viewModel.uiState.value.apodModel?.let { mutbleList.add(it) }
-                    binding.viewPagerApod.adapter = ApodPaggerAdapter(mutbleList)
+                 //   viewModel.uiState.value.apodModel?.let { mutbleList.add(it) }
+                   // binding.viewPagerApod.adapter = ApodPaggerAdapter(mutbleList)
                 }
             })
         activity?.let { newFragment.show(it.supportFragmentManager, "datePicker") }

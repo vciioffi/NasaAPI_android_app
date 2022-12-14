@@ -93,7 +93,6 @@ class ApodDataSource @Inject constructor(
 
     override suspend fun getApodFromApiWithDate(date: String): Response<ApodDto> {
         val retrofit = getRetrofit().create(ApodService::class.java)
-        println("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM&date=$date")
         return retrofit.getPictureOfTheDayWithDate("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM&date=$date")
     }
 

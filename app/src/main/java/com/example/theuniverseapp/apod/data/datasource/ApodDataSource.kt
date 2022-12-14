@@ -31,6 +31,9 @@ interface ApodDataSourceInterface {
         suspend fun getApodListFromApi(): Response<List<ApodDto>>
 
         suspend fun getApodLisFromApiWithDates(dateStart:Int, dateEnd: Int): Response<List<ApodDto>>
+
+        suspend fun getApodFromApiWithDate(date:String): Response<ApodDto>
+
     }
 }
 
@@ -86,6 +89,12 @@ class ApodDataSource @Inject constructor(
         val retrofit = getRetrofit().create(ApodService::class.java)
         return retrofit.getPictureOfTheDayList("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM&start_date=$modifiedDateStart&end_date=$modifiedDateEnd")
 
+    }
+
+    override suspend fun getApodFromApiWithDate(date: String): Response<ApodDto> {
+        val retrofit = getRetrofit().create(ApodService::class.java)
+        println("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM&date=$date")
+        return retrofit.getPictureOfTheDayWithDate("apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM&date=$date")
     }
 
     override suspend fun insertApodToDatabase(apodDb: ApodDb) {

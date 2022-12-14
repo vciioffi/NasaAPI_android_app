@@ -6,6 +6,7 @@ import com.example.theuniverseapp.apod.domain.model.ApodModel
 import com.example.theuniverseapp.apod.domain.usecases.GetApodListUc
 import com.example.theuniverseapp.apod.domain.usecases.GetApodListWithDatesUc
 import com.example.theuniverseapp.apod.domain.usecases.GetApodUc
+import com.example.theuniverseapp.apod.domain.usecases.GetApodWithDateUc
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,17 +16,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ApodModelUiState(
-    val apodModel: ApodModel? = null,
+    var apodModel: ApodModel? = null,
     var listApodModel: MutableList<ApodModel>? = null,
 
-)
+    )
 
 @HiltViewModel
 class ApodViewModel @Inject constructor(
 
     private val getApodUc: GetApodUc,
     private val getApodListUc: GetApodListUc,
-    private val getApodListWithDatesUc: GetApodListWithDatesUc
+    private val getApodListWithDatesUc: GetApodListWithDatesUc,
+    private val getApodtWithDateUc: GetApodWithDateUc
 
 ) : ViewModel() {
 
@@ -47,6 +49,12 @@ class ApodViewModel @Inject constructor(
             }
         }
     }
+     fun updateApodWithDate(date: String) {
+        viewModelScope.launch {
+            _uiState.value.apodModel = getApodtWithDateUc.invoke(date)
+        }
+    }
+
     private fun updateApodList() {
         viewModelScope.launch {
             _uiState.update {

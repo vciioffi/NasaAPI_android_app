@@ -36,5 +36,8 @@ class ApodRepository @Inject constructor(
             it.toApodModel()
         }?: emptyList()
     }
+    suspend fun getApodWithDate(date:String): ApodModel{
+        return apodDataSource.getApodFromApiWithDate(date).body()?.toApodModel() ?: ApodModel("","","","","NO apod this day","")
+    }
 
 }

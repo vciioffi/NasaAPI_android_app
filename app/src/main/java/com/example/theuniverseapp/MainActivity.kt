@@ -30,14 +30,5 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         supportActionBar?.hide()
         setContentView(binding.root)
-
-        //val bottomNavigationView = binding.bottomNavigationView
-      //  val navContoller = findNavController(binding.fragmentContainerView.id)
-
-        val retrofit = getRetrofit().create(ApodService::class.java)
-        CoroutineScope(Dispatchers.IO).launch {
-            var ki = println(retrofit.getPictureOfTheDayList(getString(R.string.api_key )+"&start_date=2022-11-19").body())
-        }
-
     }
 }

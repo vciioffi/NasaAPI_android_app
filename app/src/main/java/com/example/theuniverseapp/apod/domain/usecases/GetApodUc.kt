@@ -12,7 +12,7 @@ class GetApodUc @Inject constructor(
 ) {
 
 
-    suspend fun invoke(): ApodModel {
+    suspend operator fun invoke(): ApodModel {
         return repository.getApodResult()
     }
 }

@@ -1,11 +1,15 @@
 package com.example.theuniverseapp
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.view.isGone
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -44,7 +48,6 @@ class ApodFragment : Fragment() {
     private lateinit var binding: FragmentApodBinding
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,30 +59,20 @@ class ApodFragment : Fragment() {
         binding.btList.setOnClickListener {
             setAdapter()
         }
-        val adapter = ApodPaggerAdapter(arrayListOf())
+        val adapter = ApodPaggerAdapter(arrayListOf()) { apodModel -> showDialogBox(apodModel) }
         binding.viewPagerApod.apply {
             this.adapter = adapter
             this.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             this.offscreenPageLimit = 10000
-
-            /*  when(binding.viewPagerApod.currentItem >= binding.viewPagerApod.adapter?.itemCount!!-3){
-                  true ->viewModel.updateApodListPagination()
-
-                  else -> {}
-              }*/
         }
         viewLifecycleOwner.lifecycleScope.launch() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     viewModel.uiState.value.apply {
-                        println("sss"+this.listApodModel)
                         adapter.clearList()
                         this.listApodModel?.let { it1 -> adapter.apods.addAll(it1) }
-
                         adapter.reverseList()
                         adapter.notifyDataSetChanged()
-
-
 
 
                         /* binding.viewPagerApod.adapter?.let { it1 ->
@@ -98,7 +91,6 @@ class ApodFragment : Fragment() {
     }
 
     private fun setAdapter() {
-
         viewModel.updateApodList()
     }
 
@@ -120,16 +112,24 @@ class ApodFragment : Fragment() {
         })
     }
 
+    private fun showDialogBox(apodModel: ApodModel) {
+        val dialog = activity?.let { Dialog(it) }
+        dialog?.setContentView(R.layout.custom_dialog)
+        val imageView = dialog?.findViewById<ImageView>(R.id.img)
+        val title = dialog?.findViewById<TextView>(R.id.txt_Image_name)
+        imageView?.load(apodModel.hdurl)
+        title?.text = (apodModel.title)
+        dialog?.show()
+
+    }
+
     private fun showDatePickerDialog() {
         val newFragment =
             DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
                 // +1 because January is zero
-                val selectedDate = year.toString() + "-" + (month + 1) + "-" +  day.toString()
+                val selectedDate = year.toString() + "-" + (month + 1) + "-" + day.toString()
                 viewLifecycleOwner.lifecycleScope.launch {
-                 //   var mutbleList: MutableList<ApodModel> = arrayListOf()
                     viewModel.updateApodWithDate(selectedDate)
-                 //   viewModel.uiState.value.apodModel?.let { mutbleList.add(it) }
-                   // binding.viewPagerApod.adapter = ApodPaggerAdapter(mutbleList)
                 }
             })
         activity?.let { newFragment.show(it.supportFragmentManager, "datePicker") }

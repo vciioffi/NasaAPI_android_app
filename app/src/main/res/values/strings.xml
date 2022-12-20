@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">The Universe App</string>
+    <string name="api_key">apod?api_key=e2B3Gl8ifZIxrBoMzeSdgJJvHxUamnF6MqcB36QM</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="astronomy_picture_of_the_day">Astronomy picture of the day</string>
+    <string name="apod">Apod</string>
+
 </resources>

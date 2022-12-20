@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_custom_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_date_item_apod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DATE"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date_item_apod">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/iv_fragment_apod_pagger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/astronomy_picture_of_the_day"
+                android:minHeight="300dp"
+                android:scaleType="fitXY"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/tvImageTitle_fragment_apod"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:textColor="?attr/colorError"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                tools:text="Tittle and more" />
+
+            <TextView
+                android:id="@+id/tvImageDesc_fragment_apod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="15dp"
+                android:layout_marginBottom="210dp"
+                android:textAlignment="center"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac dolor dapibus, tincidunt est ut, convallis nulla. Ut vel diam a lectus tempus tincidunt ac et orci. Fusce auctor risus mi, eget accumsan turpis pharetra sed. Integer a enim euismod, posuere lorem scelerisque, pellentesque tortor. Integer ac eros vitae arcu eleifend convallis eu in odio. In eget leo imperdiet erat pharetra pretium sit amet non nulla. Maecenas egestas leo condimentum" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.view.isGone
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -68,10 +69,8 @@ class ApodFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     viewModel.uiState.value.apply {
-                        println("sss" + this.listApodModel)
                         adapter.clearList()
                         this.listApodModel?.let { it1 -> adapter.apods.addAll(it1) }
-
                         adapter.reverseList()
                         adapter.notifyDataSetChanged()
 
@@ -92,7 +91,6 @@ class ApodFragment : Fragment() {
     }
 
     private fun setAdapter() {
-
         viewModel.updateApodList()
     }
 
@@ -118,8 +116,9 @@ class ApodFragment : Fragment() {
         val dialog = activity?.let { Dialog(it) }
         dialog?.setContentView(R.layout.custom_dialog)
         val imageView = dialog?.findViewById<ImageView>(R.id.img)
+        val title = dialog?.findViewById<TextView>(R.id.txt_Image_name)
         imageView?.load(apodModel.hdurl)
-
+        title?.text = (apodModel.title)
         dialog?.show()
 
     }
